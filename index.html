@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aaliyah Mari's Baptism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top:#ffc9e3;
+    --sky-mid:#ffdcee;
+    --sky-low:#fff0f7;
+    --cloud-white:#ffffff;
+    --blush:#ffe3f0;
+    --pink-mid:#ffb8da;
+    --pink-deep:#ff8fc7;
+    --rose-strong:#d6488c;
+    --gold:#f6c667;
+    --text-plum:#5b3e56;
+    --text-soft:#8a6b85;
+    --card-bg:#fffaff;
+    --shadow-soft: 0 12px 30px rgba(255,143,199,0.25);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Quicksand', sans-serif;
+    color:var(--text-plum);
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 30%, var(--sky-low) 60%, var(--blush) 100%);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{font-family:'Baloo 2', cursive; font-weight:700; color:var(--text-plum);}
+
+  a{color:inherit;}
+
+  img, svg{display:block; max-width:100%;}
+
+  /* ---------- ambient clouds (parallax) ---------- */
+  .cloud-layer{
+    position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:1;
+  }
+  .cloud{
+    position:absolute; will-change:transform;
+  }
+  .cloud svg{ width:100%; height:100%; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    overflow:hidden;
+    padding:2rem 1.5rem 4rem;
+  }
+  .hero-content{ position:relative; z-index:5; }
+
+  .eyebrow{
+    display:inline-block;
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    letter-spacing:.35em;
+    text-transform:uppercase;
+    font-size:.7rem;
+    color:var(--pink-deep);
+    background:rgba(255,255,255,.65);
+    padding:.5rem 1.1rem;
+    border-radius:999px;
+    margin-bottom:1.5rem;
+    box-shadow:var(--shadow-soft);
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 9vw, 5.5rem);
+    line-height:1.05;
+    color:var(--text-plum);
+    text-shadow: 0 4px 0 rgba(255,255,255,.6);
+  }
+  .hero h1 .script{
+    display:block;
+    font-size:.42em;
+    color:var(--rose-strong);
+    font-weight:700;
+    margin-top:.3em;
+    text-shadow: 0 2px 0 rgba(255,255,255,.75);
+  }
+
+  .hero-sub{
+    margin-top:1.4rem;
+    font-size:clamp(1rem, 2.4vw, 1.25rem);
+    color:var(--text-soft);
+    max-width:32ch;
+    margin-left:auto; margin-right:auto;
+  }
+
+  .date-badge{
+    margin-top:2.2rem;
+    display:inline-flex;
+    align-items:center;
+    gap:1.4rem;
+    background:var(--card-bg);
+    padding:1.5rem 2.4rem;
+    border-radius:28px;
+    box-shadow:var(--shadow-soft);
+    border:3px dashed var(--pink-mid);
+  }
+  .date-badge .num{
+    font-family:'Baloo 2', cursive;
+    font-size:clamp(3rem, 8vw, 4.2rem);
+    color:var(--pink-deep);
+    line-height:1;
+  }
+  .date-badge .txt{
+    text-align:left; font-size:clamp(1.05rem, 2.6vw, 1.3rem); color:var(--text-soft); line-height:1.35;
+  }
+  .date-badge .txt strong{ display:block; color:var(--text-plum); font-size:clamp(1.3rem, 3.4vw, 1.7rem); font-family:'Baloo 2', cursive;}
+
+  .scroll-hint{
+    position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+    font-size:.75rem; color:var(--text-soft); letter-spacing:.2em; text-transform:uppercase;
+    display:flex; flex-direction:column; align-items:center; gap:.4rem;
+    animation:bob 2.4s ease-in-out infinite;
+    z-index:5;
+  }
+  @keyframes bob{ 0%,100%{transform:translate(-50%,0);} 50%{transform:translate(-50%,8px);} }
+
+  /* ---------- sections shared ---------- */
+  section{
+    position:relative;
+    padding:5rem 1.5rem;
+    z-index:2;
+  }
+  .section-inner{ max-width:920px; margin:0 auto; }
+
+  .reveal{
+    opacity:0; transform:translateY(26px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  .kicker{
+    text-align:center;
+    font-weight:700; letter-spacing:.3em; text-transform:uppercase;
+    font-size:.72rem; color:var(--pink-deep); margin-bottom:.7rem;
+  }
+  .section-title{
+    text-align:center;
+    font-size:clamp(1.8rem, 5vw, 2.6rem);
+    margin-bottom:2.6rem;
+  }
+
+  /* ---------- welcome ---------- */
+  .welcome{ text-align:center; }
+  .photo-frame{
+    width:min(240px, 60vw);
+    aspect-ratio:1/1;
+    margin:0 auto 2.2rem;
+    border-radius:50%;
+    overflow:hidden;
+    border:5px solid #fff;
+    outline:3px dashed var(--pink-mid);
+    outline-offset:8px;
+    box-shadow:var(--shadow-soft);
+  }
+  .photo-frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  /* reuse this class instead if swapping back to an empty placeholder later */
+  .photo-placeholder{
+    width:min(220px, 55vw);
+    aspect-ratio:1/1;
+    margin:0 auto 2.2rem;
+    border-radius:50%;
+    background:repeating-linear-gradient(135deg, var(--blush), var(--blush) 10px, #fff5fa 10px, #fff5fa 20px);
+    border:5px solid #fff;
+    outline:3px dashed var(--pink-mid);
+    outline-offset:8px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    color:var(--pink-deep); font-weight:600; gap:.4rem;
+    box-shadow:var(--shadow-soft);
+  }
+  .photo-placeholder .icon{ font-size:2.4rem; }
+  .photo-placeholder span{ font-size:.8rem; padding:0 1.2rem; color:var(--text-soft); }
+
+  .welcome-quote{
+    font-size:clamp(1.1rem, 2.6vw, 1.5rem);
+    line-height:1.7;
+    max-width:38ch;
+    margin:0 auto;
+    color:var(--text-plum);
+  }
+  .welcome-names{
+    margin-top:1.6rem;
+    font-family:'Baloo 2', cursive;
+    color:var(--pink-deep);
+    font-size:1.3rem;
+  }
+
+  /* ---------- schedule / route ---------- */
+  .route-wrap{
+    background:var(--card-bg);
+    border-radius:28px;
+    padding:2.4rem 1.4rem 2.8rem;
+    box-shadow:var(--shadow-soft);
+  }
+  .route-svg{ width:100%; max-width:640px; margin:0 auto 1rem; display:block; }
+
+  .schedule-cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.4rem;
+    margin-top:1rem;
+  }
+  @media (max-width:640px){ .schedule-cards{ grid-template-columns:1fr; } }
+
+  .sched-card{
+    background:#fff;
+    border-radius:20px;
+    padding:1.6rem 1.4rem;
+    text-align:center;
+    border:2px solid var(--blush);
+    display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  }
+  .sched-card .time{
+    font-family:'Baloo 2', cursive; color:var(--pink-deep); font-size:1.5rem;
+  }
+  .sched-card .what{ font-weight:700; }
+  .sched-card .where{ color:var(--text-soft); font-size:.9rem; line-height:1.4; }
+
+  .map-btn{
+    margin-top:.6rem;
+    display:inline-flex; align-items:center; gap:.5rem;
+    background:var(--pink-deep);
+    color:#fff;
+    font-weight:700;
+    font-family:'Quicksand', sans-serif;
+    padding:.65rem 1.3rem;
+    border-radius:999px;
+    text-decoration:none;
+    font-size:.85rem;
+    box-shadow:0 8px 18px rgba(255,143,199,.45);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .map-btn:hover{ transform:translateY(-3px) scale(1.03); box-shadow:0 12px 22px rgba(255,143,199,.55); }
+  .map-btn:active{ transform:translateY(0) scale(.98); }
+
+  /* ---------- dress code ---------- */
+  .dress-grid{
+    display:flex; justify-content:center; gap:2.4rem; flex-wrap:wrap; margin-top:1rem;
+  }
+  .dress-item{ text-align:center; width:160px; }
+  .onesie{ width:84px; height:84px; margin:0 auto .8rem; filter:drop-shadow(0 6px 10px rgba(0,0,0,.08)); }
+  .dress-item .label{ font-family:'Baloo 2', cursive; font-size:1.05rem; }
+  .dress-item .who{ font-size:.82rem; color:var(--text-soft); margin-top:.2rem; }
+
+  /* ---------- gifts ---------- */
+  .gift-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:1rem;
+  }
+  .gift-card{
+    background:var(--card-bg);
+    border-radius:18px;
+    padding:1.1rem 1.2rem;
+    display:flex; align-items:flex-start; gap:.8rem;
+    border:2px solid var(--blush);
+    font-size:.92rem;
+    line-height:1.4;
+  }
+  .gift-card .emoji{ font-size:1.4rem; flex-shrink:0; }
+  .gift-note{
+    text-align:center; margin-top:2rem; color:var(--text-soft); font-size:.85rem; font-style:italic;
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    position:relative; text-align:center;
+    padding:5.5rem 1.5rem 6.5rem;
+    overflow:hidden;
+  }
+  footer .cloud-layer{ z-index:1; }
+  footer .sign, footer .sub{
+    position:relative; z-index:5;
+  }
+  footer .sign{
+    font-family:'Baloo 2', cursive; font-size:1.6rem; color:var(--pink-deep);
+  }
+  footer .sub{ color:var(--text-soft); margin-top:.5rem; font-size:.9rem; }
+
+  body{ padding-bottom:env(safe-area-inset-bottom, 0); }
+
+  /* floating hearts ambient in hero */
+  .floaty{
+    position:absolute; z-index:3; pointer-events:none; opacity:.85;
+    animation:float-up linear infinite;
+  }
+  @keyframes float-up{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:.9; }
+    90%{ opacity:.7; }
+    100%{ transform:translateY(-70vh) rotate(20deg); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="cloud-layer" id="cloudLayer"></div>
+
+  <div class="hero-content">
+    <span class="eyebrow">You're Invited</span>
+    <h1>Aaliyah Mari<span class="script">is getting Baptized 🕊️</span></h1>
+    <p class="hero-sub">With grateful hearts, we invite you to witness and celebrate her baptismal day, surrounded by the people who make her world so beautiful.</p>
+
+    <div class="date-badge">
+      <span class="num">05</span>
+      <span class="txt"><strong>September</strong>Saturday · 8:30 AM</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">Scroll ↓</div>
+</div>
+
+<!-- ================= WELCOME ================= -->
+<section class="welcome">
+  <div class="section-inner reveal">
+    <div class="photo-frame">
+      <img src="assets/aaliyah.jpg" alt="Aaliyah Mari">
+    </div>
+    <p class="welcome-quote">With grateful hearts, we invite you to witness and celebrate her baptismal day, surrounded by the people who make her world so beautiful.</p>
+    <p class="welcome-names">— Aaliyah Mari</p>
+  </div>
+</section>
+
+<!-- ================= SCHEDULE / ROUTE ================= -->
+<section id="schedule">
+  <div class="section-inner reveal">
+    <p class="kicker">The Day's Journey</p>
+    <h2 class="section-title">Where to Be, and When</h2>
+
+    <div class="route-wrap">
+      <svg class="route-svg" viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- dotted path -->
+        <path d="M90,150 C 180,60 260,60 310,110 S 440,190 530,120" fill="none" stroke="#ffb8da" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 16"/>
+        <!-- church icon -->
+        <g transform="translate(40,90)">
+          <rect x="10" y="30" width="50" height="45" rx="4" fill="#fff" stroke="#ff8fc7" stroke-width="3"/>
+          <polygon points="35,0 5,30 65,30" fill="#ffe3f0" stroke="#ff8fc7" stroke-width="3"/>
+          <rect x="30" y="6" width="10" height="14" fill="#ff8fc7"/>
+          <rect x="27" y="45" width="16" height="30" fill="#ffb8da"/>
+          <line x1="35" y1="-14" x2="35" y2="0" stroke="#ff8fc7" stroke-width="3"/>
+          <line x1="29" y1="-8" x2="41" y2="-8" stroke="#ff8fc7" stroke-width="3"/>
+        </g>
+        <text x="65" y="200" text-anchor="middle" font-family="Baloo 2, cursive" font-size="15" fill="#5b3e56">Church</text>
+
+        <!-- hall / restaurant icon -->
+        <g transform="translate(500,70)">
+          <rect x="0" y="20" width="60" height="45" rx="4" fill="#fff" stroke="#ff8fc7" stroke-width="3"/>
+          <rect x="8" y="30" width="12" height="14" fill="#ffe3f0"/>
+          <rect x="26" y="30" width="12" height="14" fill="#ffe3f0"/>
+          <rect x="44" y="30" width="8" height="14" fill="#ffe3f0"/>
+          <polyline points="0,20 30,-4 60,20" fill="none" stroke="#ff8fc7" stroke-width="3" stroke-linejoin="round"/>
+          <line x1="30" y1="-4" x2="30" y2="-18" stroke="#ff8fc7" stroke-width="3"/>
+          <polygon points="30,-18 46,-13 30,-8" fill="#f6c667"/>
+        </g>
+        <text x="530" y="200" text-anchor="middle" font-family="Baloo 2, cursive" font-size="15" fill="#5b3e56">Celebration</text>
+
+        <!-- little cloud along the path -->
+        <g transform="translate(280,20)" fill="#ffffff" stroke="#d9eefc" stroke-width="2">
+          <ellipse cx="10" cy="14" rx="14" ry="10"/>
+          <ellipse cx="26" cy="8" rx="16" ry="12"/>
+          <ellipse cx="44" cy="16" rx="13" ry="9"/>
+        </g>
+      </svg>
+
+      <div class="schedule-cards">
+        <div class="sched-card">
+          <div class="time">8:30 AM</div>
+          <div class="what">Baptism Ceremony</div>
+          <div class="where">Lupit Church<br>Lizarez Street</div>
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Lupit%20Church%20Lizarez%20Street" target="_blank" rel="noopener">📍 Open Map</a>
+        </div>
+        <div class="sched-card">
+          <div class="time">10:30 AM</div>
+          <div class="what">Celebration Lunch</div>
+          <div class="where">Rojo's Restaurant<br>Lizarez Street, in front of the church</div>
+          <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Rojo%27s%20Restaurant%20Lizarez%20Street" target="_blank" rel="noopener">📍 Open Map</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DRESS CODE ================= -->
+<section id="dresscode">
+  <div class="section-inner reveal">
+    <p class="kicker">Come Dressed For Joy</p>
+    <h2 class="section-title">Dress Code</h2>
+
+    <div class="dress-grid">
+      <div class="dress-item">
+        <svg class="onesie" viewBox="0 0 100 100">
+          <path d="M30,10 h40 l5,18 -12,6 v56 h-26 v-56 l-12,-6 z" fill="#ffffff" stroke="#e8c7d9" stroke-width="3"/>
+          <circle cx="50" cy="30" r="4" fill="#ffb8da"/>
+        </svg>
+        <div class="label">White</div>
+        <div class="who">Ninang &amp; Ninong</div>
+      </div>
+      <div class="dress-item">
+        <svg class="onesie" viewBox="0 0 100 100">
+          <path d="M30,10 h40 l5,18 -12,6 v56 h-26 v-56 l-12,-6 z" fill="#ffb8da" stroke="#ff8fc7" stroke-width="3"/>
+          <circle cx="50" cy="30" r="4" fill="#ffffff"/>
+        </svg>
+        <div class="label">Light Pink</div>
+        <div class="who">Guests</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GIFTS ================= -->
+<section id="gifts">
+  <div class="section-inner reveal">
+    <p class="kicker">Should You Wish To Bring Something</p>
+    <h2 class="section-title">Gift Ideas</h2>
+
+    <div class="gift-grid">
+      <div class="gift-card"><span class="emoji">🍼</span><span>EQ Dry Diapers — Newborn / Small</span></div>
+      <div class="gift-card"><span class="emoji">🥛</span><span>Similac Tummicare — 0–6 months</span></div>
+      <div class="gift-card"><span class="emoji">🧸</span><span>Educational Toys</span></div>
+      <div class="gift-card"><span class="emoji">💧</span><span>Pure Water Wipes — EQ / Moosegear / Tinybuds</span></div>
+      <div class="gift-card"><span class="emoji">🧻</span><span>Dry Cotton Wipes — Moosegear / Tinybuds</span></div>
+      <div class="gift-card"><span class="emoji">🫧</span><span>Biolane Pure H2O Cleanser — Rinse-Free Micellar Water</span></div>
+      <div class="gift-card"><span class="emoji">🛁</span><span>Cetaphil Baby — Wash / Shampoo / Lotion</span></div>
+      <div class="gift-card"><span class="emoji">🧴</span><span>Unilove Wipes</span></div>
+      <div class="gift-card"><span class="emoji">🧼</span><span>Unilove Baby Bottle Cleanser</span></div>
+      <div class="gift-card"><span class="emoji">🌸</span><span>Unilove Baby Laundry Detergent — Milk Scent</span></div>
+      <div class="gift-card"><span class="emoji">🌼</span><span>Unilove Baby Fabric Softener</span></div>
+    </div>
+    <p class="gift-note">Your presence is truly the greatest gift of all 💕</p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="cloud-layer" id="cloudLayerFooter"></div>
+  <p class="sign">With love,</p>
+  <p class="sub">Aaliyah Mari's Family</p>
+  <p class="sub">See you on September 5 🎀</p>
+</footer>
+
+<script>
+// ---------- cloud generator ----------
+function cloudSVG(color, opacity){
+  return `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" style="opacity:${opacity}">
+    <ellipse cx="60" cy="60" rx="45" ry="30" fill="${color}"/>
+    <ellipse cx="110" cy="45" rx="55" ry="38" fill="${color}"/>
+    <ellipse cx="160" cy="62" rx="40" ry="26" fill="${color}"/>
+  </svg>`;
+}
+
+function buildClouds(container, count, seedOffset){
+  const layerConfigs = [
+    { size: 260, top: '8%',  speed: 0.15, color:'#ffffff', opacity:0.9 },
+    { size: 180, top: '28%', speed: 0.30, color:'#ffffff', opacity:0.75 },
+    { size: 320, top: '55%', speed: 0.08, color:'#ffe9f4', opacity:0.8 },
+    { size: 150, top: '70%', speed: 0.22, color:'#ffffff', opacity:0.65 },
+  ];
+  const clouds = [];
+  layerConfigs.forEach((cfg, i) => {
+    const el = document.createElement('div');
+    el.className = 'cloud';
+    el.style.width = cfg.size + 'px';
+    el.style.height = (cfg.size*0.5) + 'px';
+    el.style.top = cfg.top;
+    const startLeft = ((i * 37 + seedOffset*23) % 130) - 15;
+    el.style.left = startLeft + '%';
+    el.innerHTML = cloudSVG(cfg.color, cfg.opacity);
+    container.appendChild(el);
+    clouds.push({el, speed: cfg.speed, drift: (i%2===0?1:-1) * (6 + i*2)});
+  });
+  return clouds;
+}
+
+const heroClouds = buildClouds(document.getElementById('cloudLayer'), 4, 0);
+const footerClouds = buildClouds(document.getElementById('cloudLayerFooter'), 4, 2);
+const allClouds = heroClouds.concat(footerClouds);
+
+let ticking = false;
+function updateParallax(){
+  const scrollY = window.scrollY || window.pageYOffset;
+  allClouds.forEach(c => {
+    const y = scrollY * c.speed * 0.3;
+    c.el.style.transform = `translate3d(0, ${y}px, 0)`;
+  });
+  ticking = false;
+}
+window.addEventListener('scroll', () => {
+  if(!ticking){ requestAnimationFrame(updateParallax); ticking = true; }
+}, { passive:true });
+updateParallax();
+
+// gentle ambient horizontal drift, independent of scroll
+allClouds.forEach((c, i) => {
+  const duration = 22 + i*7;
+  c.el.animate(
+    [{ marginLeft:'0px' }, { marginLeft: (c.drift) + 'px' }, { marginLeft:'0px' }],
+    { duration: duration*1000, iterations: Infinity, easing:'ease-in-out' }
+  );
+});
+
+// ---------- scroll reveal ----------
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// ---------- floating hearts in hero ----------
+const heroEl = document.querySelector('.hero');
+const heartEmojis = ['🎀','💗','☁️','✨'];
+function spawnHeart(){
+  const heart = document.createElement('div');
+  heart.className = 'floaty';
+  heart.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  heart.style.left = (Math.random()*90 + 5) + '%';
+  heart.style.bottom = '-10%';
+  heart.style.fontSize = (14 + Math.random()*14) + 'px';
+  heart.style.animationDuration = (6 + Math.random()*5) + 's';
+  heroEl.appendChild(heart);
+  setTimeout(() => heart.remove(), 11000);
+}
+setInterval(spawnHeart, 1400);
+spawnHeart();
+</script>
+
+</body>
+</html>
